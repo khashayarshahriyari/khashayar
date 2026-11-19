@@ -204,8 +204,6 @@ body::before {
 /* ---------- Project page: the events map ---------- */
 
 .project {
-  max-width: 96rem;
-  margin: 0 auto;
   padding: var(--gutter);
 }
 
@@ -260,7 +258,8 @@ body::before {
 .map-frame iframe {
   display: block;
   width: 100%;
-  height: clamp(620px, 82vh, 920px);
+  /* Tall enough to fill the browser window once you scroll down to it. */
+  height: clamp(720px, calc(100vh - 3rem), 1400px);
   border: 0;
 }
 
