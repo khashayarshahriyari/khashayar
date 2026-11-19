@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hafez Music Ontology &middot; Khashayar Shahriyari</title>
+  <meta name="description" content="Hafez Music Ontology, couplets of Hafez about music: a random couplet, an English translation, and a browsable index.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="project">
+    <a class="back" href="index.html#more">&larr; Khashayar Shahriyari</a>
+
+    <h1 class="visually-hidden">Hafez Music Ontology, couplets of Hafez about music, with English translations</h1>
+
+    <p class="intro">
+      This project reads Hafez through his musical vocabulary. It gathers the couplets in which he names a minstrel,
+      an instrument, a song, a mode or a dance, found through twenty Persian words and their common forms, and it leaves out
+      the places where a word is used in a non-musical sense. You can draw a couplet at random, read it in English,
+      or browse and search the whole collection. The Persian text comes from Ganjoor, the English is a working translation
+      prepared with Claude, and the code is written by Claude Code and is available in my Github.
+    </p>
+
+    <!-- The project lives in its own GitHub repository, published with GitHub Pages. -->
+    <div class="map-frame">
+      <iframe src="https://khashayarshahriyari.github.io/Hafez-Music-Ontology/?embed=1"
+              title="Hafez Music Ontology: a random couplet, its English translation, and an index of all couplets" loading="lazy"></iframe>
+    </div>
+  </main>
+
+  <script>
+    // The project page tells this page its height, so the whole page scrolls
+    // (instead of a scrolling box inside the frame).
+    (function () {
+      var frame = document.querySelector(".map-frame iframe");
+      window.addEventListener("message", function (e) {
+        var d = e.data;
+        if (!frame || e.source !== frame.contentWindow || !d || d.type !== "hmo:height") return;
+        var h = Number(d.height);
+        frame.style.height = (h > 200 && h < 60000) ? Math.ceil(h) + "px" : "";
+      });
+    })();
+  </script>
+
+</body>
+</html>
