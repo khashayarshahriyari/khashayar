@@ -4,44 +4,84 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hafez Music Ontology &middot; Khashayar Shahriyari</title>
-  <meta name="description" content="Hafez Music Ontology, couplets of Hafez about music: a random couplet, an English translation, and a browsable index.">
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Couplets of Hafez that speak of minstrels, instruments, song and dance: draw one at random, read it in English, or browse the whole collection.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="hafez/style.css">
 </head>
 <body>
+  <a class="skip" href="#random">Skip to the couplets</a>
 
-  <main class="project">
+  <header class="top">
     <a class="back" href="index.html#more">&larr; Khashayar Shahriyari</a>
+  </header>
 
-    <h1 class="visually-hidden">Hafez Music Ontology, couplets of Hafez about music, with English translations</h1>
+  <main>
+    <!-- Introduction -->
+    <section class="intro" aria-labelledby="title">
+      <h1 id="title">Hafez Music Ontology</h1>
+      <!-- YOUR INTRODUCTION: replace the text of the next paragraph with your own. -->
+      <p class="lede">A small instrument for reading Hafez through his musical vocabulary: couplets in which he names a minstrel, an instrument, a song, a mode or a dance.</p>
+      <p>The collection draws on his ghazals, qet'e, ruba'i, qasidas and the <em>Saqi-nameh</em>, and is gathered by twenty Persian words and their common forms:</p>
+      <p class="wordlist" lang="fa" dir="rtl">مطرب، طرب، بربط، پرده، چنگ، رباب، بانگ، آهنگ، صوت، ساز، آواز، نی، رود، دف، رقص، سماع، دستان، کمانچه، نغمه، سرود</p>
+      <p>Draw a couplet at random <span class="n">(1)</span>, read it in English <span class="n">(2)</span>, or browse everything <span class="n">(3)</span>.</p>
+      <details>
+        <summary>How the couplets were chosen</summary>
+        <p>Several of these words lead double lives: <span lang="fa">رود</span> is a river, a stringed instrument, or the verb “goes”; <span lang="fa">پرده</span> is a veil, a fret, or a musical mode; <span lang="fa">نی</span> is a reed flute or “not”; <span lang="fa">ساز</span> is an instrument or the verb “make”. Each candidate couplet was read in context, and those where the word carries only a non-musical sense were left out. A handful of borderline cases (mostly plain “joy”, <span lang="fa">طرب</span>, or an ordinary voice) are held back as well. Matched words are highlighted in each couplet.</p>
+        <p>The Persian text comes from <a href="https://ganjoor.net" rel="noopener">Ganjoor</a>, and every couplet links back to its page there. The English renderings are working translations prepared with Claude: literal rather than poetic, and open to correction.</p>
+      </details>
+    </section>
 
-    <p class="intro">
-      This project reads Hafez through his musical vocabulary. It gathers the couplets in which he names a minstrel,
-      an instrument, a song, a mode or a dance, found through twenty Persian words and their common forms, and it leaves out
-      the places where a word is used in a non-musical sense. You can draw a couplet at random, read it in English,
-      or browse and search the whole collection. The Persian text comes from Ganjoor, the English is a working translation
-      prepared with Claude, and the code is written by Claude Code and is available in my Github.
-    </p>
+    <noscript><p class="notice">This page needs JavaScript to load the couplets.</p></noscript>
 
-    <!-- The project lives in its own GitHub repository, published with GitHub Pages. -->
-    <div class="map-frame">
-      <iframe src="https://khashayarshahriyari.github.io/Hafez-music-ontology/?embed=1"
-              title="Hafez Music Ontology: a random couplet, its English translation, and an index of all couplets" loading="lazy"></iframe>
-    </div>
+    <!-- 1 · Random couplet -->
+    <section id="random" class="block" aria-labelledby="h-random">
+      <h2 id="h-random"><span class="num">1</span> A couplet at random</h2>
+      <div class="card" id="random-card" aria-live="polite">
+        <div class="loading">Loading…</div>
+      </div>
+      <div class="actions">
+        <button type="button" id="again" class="btn">Another couplet</button>
+        <span class="hint" id="random-count"></span>
+      </div>
+    </section>
+
+    <!-- 2 · Translation -->
+    <section id="translation" class="block" aria-labelledby="h-trans">
+      <h2 id="h-trans"><span class="num">2</span> In English</h2>
+      <div class="card" id="trans-card" aria-live="polite">
+        <p class="empty">Pick a couplet above, or choose one from the list below.</p>
+      </div>
+    </section>
+
+    <!-- 3 · Browse -->
+    <section id="browse" class="block" aria-labelledby="h-browse">
+      <h2 id="h-browse"><span class="num">3</span> All couplets</h2>
+      <div class="tools">
+        <label class="search">
+          <span class="sr">Search the couplets</span>
+          <input type="search" id="q" placeholder="Search in Persian or English…" dir="auto" autocomplete="off">
+        </label>
+        <div class="order" role="group" aria-label="Order">
+          <button type="button" class="seg is-on" data-order="poem">By poem</button>
+          <button type="button" class="seg" data-order="word">By word</button>
+        </div>
+      </div>
+      <div class="chips" id="chips" role="group" aria-label="Filter by word"></div>
+      <p class="hint" id="list-count"></p>
+      <div id="list" class="list"></div>
+    </section>
   </main>
 
-  <script>
-    // The project page tells this page its height, so the whole page scrolls
-    // (instead of a scrolling box inside the frame).
-    (function () {
-      var frame = document.querySelector(".map-frame iframe");
-      window.addEventListener("message", function (e) {
-        var d = e.data;
-        if (!frame || e.source !== frame.contentWindow || !d || d.type !== "hmo:height") return;
-        var h = Number(d.height);
-        frame.style.height = (h > 200 && h < 60000) ? Math.ceil(h) + "px" : "";
-      });
-    })();
-  </script>
+  <footer class="foot">
+    <p>Persian text: <a href="https://ganjoor.net" rel="noopener">Ganjoor</a>. English: working translations prepared with Claude.</p>
+  </footer>
 
+  <!-- Photo credit for the background image (same as on the main site). -->
+  <p class="credit">Background photo: <a href="https://whc.unesco.org/en/list/1770/" target="_blank" rel="noopener noreferrer">Alamut Castle on Alborz Mountains, Iran</a>, taken by me in Spring 2019</p>
+
+  <script src="hafez/lines.js"></script>
+  <script src="hafez/app.js"></script>
 </body>
 </html>
