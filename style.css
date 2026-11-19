@@ -126,16 +126,17 @@ body::before {
   outline-offset: 4px;
 }
 
-/* Photo credit: tiny, fixed in the bottom-right corner so it stays there while you scroll. */
+/* Photo credit. On wide screens it is fixed in the bottom-right corner (flush with the screen edge) and stays
+   there while you scroll. On phones it sits at the very end of the page instead. */
 .credit {
   position: fixed;
-  right: calc(var(--gutter) - 0.6rem);
+  right: 0;
   bottom: 0.6rem;
   z-index: 10;
-  max-width: min(44rem, calc(100% - var(--gutter)));
+  max-width: min(44rem, 100%);
   margin: 0;
   padding: 0.28rem 0.6rem;
-  border-radius: 6px;
+  border-radius: 6px 0 0 6px;
   background: rgba(12, 12, 12, 0.42);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -145,6 +146,15 @@ body::before {
   line-height: 1.4;
   letter-spacing: 0.03em;
   color: rgba(244, 241, 234, 0.72);
+}
+
+@media (max-width: 700px) {
+  .credit {
+    position: static;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 0.6rem auto;
+  }
 }
 
 .credit a {
@@ -299,9 +309,4 @@ body::before {
 /* On phones the map page stacks the map above its list, so give it more height. */
 @media (max-width: 820px) {
   .map-frame iframe { height: 150vh; height: 150svh; }
-}
-
-/* On narrow screens the credit wraps to two lines; give it room so it never sits on the arrow. */
-@media (max-width: 700px) {
-  .hero { padding-bottom: calc(var(--gutter) + 2.6rem); }
 }
