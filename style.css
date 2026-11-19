@@ -1,0 +1,198 @@
+/* Styles for the whole site. */
+
+:root {
+  --ink: #f4f1ea;
+  --ink-soft: rgba(244, 241, 234, 0.88);
+  --ink-dim: rgba(244, 241, 234, 0.6);
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --gutter: clamp(24px, 5vw, 72px);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: #1a1a1a;
+  color: var(--ink);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The photo sits on a fixed layer, so the background never changes while you scroll. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 75% 45% at 20% 0%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.30) 38%, rgba(0, 0, 0, 0) 62%),
+    linear-gradient(rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.28)),
+    url("background.jpg") 55% center / cover no-repeat;
+}
+
+/* ---------- First section: name, bio and two links ---------- */
+
+.hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: var(--gutter);
+}
+
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 7vw, 5.25rem);
+  line-height: 1.02;
+  letter-spacing: 0.005em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), 0 2px 28px rgba(0, 0, 0, 0.55);
+}
+
+.hero-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.about {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 36rem;
+}
+
+/* Bio text. The list below uses these same type settings. */
+.about p,
+.list summary {
+  font-family: var(--sans);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+.about p { margin: 0 0 1.5rem; }
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+}
+
+.links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(244, 241, 234, 0.5);
+  transition: border-color 0.2s ease;
+}
+
+.links a:hover { border-bottom-color: var(--ink); }
+
+.scroll {
+  flex: none;
+  padding: 0.25rem 0.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.scroll:hover { opacity: 1; transform: translateY(3px); }
+
+.links a:focus-visible,
+.scroll:focus-visible,
+.list summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ---------- Second section: simple list that opens galleries ---------- */
+
+/* Same left edge as the bio; just space above it. No panel, so the photo stays visible. */
+.more {
+  padding: clamp(64px, 14vh, 160px) var(--gutter) clamp(64px, 10vh, 120px);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list summary {
+  display: block;
+  width: fit-content;
+  list-style: none;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(244, 241, 234, 0.5);
+  text-underline-offset: 0.3em;
+}
+
+.list summary::-webkit-details-marker { display: none; }
+
+.list summary:hover,
+.list details[open] > summary {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+/* Gallery: pictures sit beside each other and wrap into rows of equal height. */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 1rem 0 2.25rem;
+}
+
+/* Keeps a short last row from stretching across the page. */
+.gallery::after {
+  content: "";
+  flex-grow: 1000000;
+}
+
+/* On phones every picture gets the full width. */
+@media (max-width: 560px) {
+  .gallery::after { display: none; }
+}
+
+.gallery figure {
+  position: relative;
+  margin: 0;
+  flex-grow: calc(var(--r) * 100);
+  flex-shrink: 1;
+  flex-basis: calc(var(--r) * 14rem);
+}
+
+.gallery figure::before {
+  content: "";
+  display: block;
+  padding-top: calc(100% / var(--r));
+}
+
+.gallery img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
