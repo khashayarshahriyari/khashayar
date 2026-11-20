@@ -60,8 +60,8 @@ a:hover { color: var(--ink); }
 .skip { position: absolute; left: -999px; }
 .skip:focus { left: 1rem; top: 1rem; background: var(--wine); color: var(--wine-ink); padding: .5rem .8rem; border-radius: 8px; z-index: 20; }
 
-/* Content column: left-aligned with the site's gutter, so the photo stays visible on wide screens. */
-.top, main, .foot { max-width: calc(60rem + 2 * var(--gutter)); margin: 0; padding-left: var(--gutter); padding-right: var(--gutter); }
+/* Content column: centred on the screen; the text inside stays left-aligned. */
+.top, main, .foot { max-width: calc(54rem + 2 * var(--gutter)); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 .top { padding-top: var(--gutter); }
 
 .back {
@@ -88,26 +88,26 @@ a:hover { color: var(--ink); }
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), 0 2px 28px rgba(0, 0, 0, 0.55);
 }
 .intro p, .intro summary {
-  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.05rem, 1.5vw, 1.15rem);
   line-height: 1.65;
   color: var(--ink-soft);
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
 }
-.intro p { margin: 0 0 1rem; max-width: 40rem; }
-.wordlist {
-  font-family: var(--fa-font);
-  font-size: 1.35rem !important;
-  line-height: 2 !important;
-  text-align: center;
+.intro p { margin: 0 0 1.1rem; }
+.intro p.terms {
+  font-size: 1rem;
+  line-height: 1.85;
   background: var(--panel);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: .5rem 1rem;
+  padding: .8rem 1.1rem;
 }
+.intro [lang="fa"], .intro [lang="ar"] { font-family: var(--fa-font); font-size: 1.18em; unicode-bidi: isolate; white-space: nowrap; line-height: 1; }
+.intro em { font-style: italic; }
 .n { color: var(--ink-dim); }
-.intro details { margin-top: .4rem; max-width: 40rem; }
+.intro details { margin-top: .4rem; }
 .intro summary {
   display: block;
   width: fit-content;
@@ -160,7 +160,7 @@ a:hover { color: var(--ink); }
 /* A couplet: first hemistich on the right, second on the left */
 .beyt { display: grid; grid-template-columns: 1fr 1fr; direction: rtl; column-gap: 1.6rem; row-gap: .15rem; font-family: var(--fa-font); }
 .beyt .m { text-align: center; line-height: 2.1; text-wrap: balance; }
-.beyt-lg { font-size: clamp(1.3rem, 3vw, 1.65rem); }
+.beyt-lg { font-size: clamp(1.3rem, 3vw, 1.45rem); }
 .beyt-md { font-size: clamp(1.15rem, 2.6vw, 1.3rem); }
 mark { background: var(--mark); color: inherit; border-radius: 4px; padding: 0 .12em; }
 @media (max-width: 640px) { .beyt { grid-template-columns: 1fr; } }
